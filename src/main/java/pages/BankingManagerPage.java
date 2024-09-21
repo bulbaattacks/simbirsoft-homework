@@ -2,7 +2,6 @@ package pages;
 
 import exceptions.NotRightPageException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -133,7 +132,6 @@ public class BankingManagerPage extends BasePage {
         waitElementToBeClickable(deleteCustomer);
 
         Map<String, List<WebElement>> nameToRowMap = new HashMap<>();
-
         for (var row : customersTable) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
             var nameCell = cells.get(0);
@@ -143,14 +141,8 @@ public class BankingManagerPage extends BasePage {
         Map<String, Integer> nameToSizeMap = new HashMap<>();
         nameToRowMap.keySet().forEach(key -> nameToSizeMap.put(key, key.length()));
 
-        // TODO переписать: у которого длина будет ближе к среднему арифметическому
-        Integer avgNameSize = nameToSizeMap.values().stream().collect(Collectors.averagingInt(num -> num)).intValue();
-
-        String targetName = nameToSizeMap.entrySet().stream()
-                .filter(e -> Objects.equals(e.getValue(), avgNameSize))
-                .findFirst()
-                .map(Map.Entry::getKey)
-                .orElseThrow(() -> new NotFoundException("Name for delete was not found"));
+        double avgNameSize = nameToSizeMap.values().stream().collect(Collectors.averagingInt(num -> num));
+        var targetName = findTargetName(nameToSizeMap, avgNameSize);
 
         List<WebElement> targetCells =  nameToRowMap.get(targetName);
         var deletedCustomer = targetCells.stream().limit(3).map(WebElement::getText).toList();
@@ -163,5 +155,19 @@ public class BankingManagerPage extends BasePage {
 
     private String makeCompositeKey(String name, String surname, String postCode) {
         return "%s-%s-%s".formatted(name, surname, postCode);
+    }
+
+    private String findTargetName(Map<String, Integer> nameToSizeMap, double avgNameSize) {
+        double minDiff = Double.MAX_VALUE;
+        String targetName = "";
+        for (var entry: nameToSizeMap.entrySet()) {
+            var nameLength = entry.getValue();
+            double diff = Math.abs(avgNameSize - nameLength);
+            if (minDiff > diff) {
+                minDiff = diff;
+                targetName = entry.getKey();
+            }
+        }
+        return targetName;
     }
 }

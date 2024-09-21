@@ -1,12 +1,13 @@
+package pages;
+
 import driver.impl.DriverFactoryImpl;
 import exceptions.DriverNotSupportedException;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
-import pages.BankingManagerPage;
 import service.GeneratorService;
 
-class InitTest {
+class BankingManagerPageTest {
     WebDriver driver;
     BankingManagerPage page;
 
