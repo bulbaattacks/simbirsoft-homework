@@ -14,6 +14,9 @@ public class DriverFactoryImpl implements DriverFactory {
         if (browserType.equals("chrome")) {
             return ChromeWebDriver.createDriver();
         }
+        if (browserType.equals("ci")) {
+            return ChromeWebDriver.createCiDriver();
+        }
         throw new DriverNotSupportedException(browserType);
     }
 }
