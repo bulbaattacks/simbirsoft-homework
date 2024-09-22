@@ -8,16 +8,12 @@ on:
 jobs:
   test-job:
     runs-on: ubuntu-latest
+    env:
+      browserName: ci
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Check if ChromeDriver is installed
-        run: chromedriver --version || echo "ChromeDriver is not installed"
-
-      - name: Check if Chrome is installed
-        run: google-chrome --version || echo "Chrome is not installed"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4

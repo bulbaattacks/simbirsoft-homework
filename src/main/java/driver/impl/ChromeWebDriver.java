@@ -15,4 +15,12 @@ public class ChromeWebDriver {
         chromeOptions.addArguments("--start-maximized");
         return new ChromeDriver(chromeOptions);
     }
+
+    public static WebDriver createCiDriver() {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--window-size=1920,1080");
+        return new ChromeDriver(chromeOptions);
+    }
 }
