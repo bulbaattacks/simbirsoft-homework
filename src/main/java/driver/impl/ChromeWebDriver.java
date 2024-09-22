@@ -8,7 +8,6 @@ public class ChromeWebDriver {
 
     public static WebDriver createDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--no-first-run");
         chromeOptions.addArguments("--homepage=about:blank");
