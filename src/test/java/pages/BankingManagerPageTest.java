@@ -2,7 +2,6 @@ package pages;
 
 import driver.impl.DriverFactoryImpl;
 import exceptions.DriverNotSupportedException;
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import service.GeneratorService;
@@ -26,7 +25,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @Step("Тест создания клиента.")
+    @DisplayName("Тест создания клиента.")
     void addCustomer() {
         page.open()
                 .verifyPage()
@@ -47,7 +46,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @Step("Сортировка по первому имени")
+    @DisplayName("Сортировка по первому имени")
     void sortCustomerstByFirstName() {
         page.open()
                 .verifyPage()
@@ -57,7 +56,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @Step("Удаление клиента")
+    @DisplayName("Удаление клиента")
     void deleteCustomer() {
         page.open()
                 .verifyPage()
