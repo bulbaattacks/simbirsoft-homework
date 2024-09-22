@@ -53,44 +53,52 @@ public class BankingManagerPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public void verifyPage() throws NotRightPageException {
+    public BankingManagerPage verifyPage() throws NotRightPageException {
         String currentUrl = driver.getCurrentUrl();
         String targetUrl = baseUrl + pathToPage;
         if (!(targetUrl).equals(currentUrl)) {
             throw new NotRightPageException(currentUrl);
         }
+        return this;
     }
 
     @Override
-    public void open() {
+    public BankingManagerPage open() {
         driver.get(super.baseUrl + pathToPage);
+        return this;
     }
 
-    public void clickAddCustomerButton() {
+    public BankingManagerPage clickAddCustomerButton() {
         waitElementToBeVisible(addCustomer);
         addCustomer.click();
+        return this;
     }
 
-    public void clickCustomersButton() {
+    public BankingManagerPage clickCustomersButton() {
         waitElementToBeVisible(customers);
         customers.click();
+        return this;
     }
 
-    public void setFirstname(String costomerFirstname) {
+    public BankingManagerPage setFirstname(String costomerFirstname) {
         waitElementToBeClickable(firstName);
         firstName.sendKeys(costomerFirstname);
+        return this;
     }
 
-    public void setLastname(String costomerLastname) {
+    public BankingManagerPage setLastname(String costomerLastname) {
         lastName.sendKeys(costomerLastname);
+        return this;
     }
 
-    public void setPostCode(String costomerPostCode) {
+    public BankingManagerPage setPostCode(String costomerPostCode) {
         postCode.sendKeys(costomerPostCode);
+        return this;
     }
 
-    public void clickToSbmt() {
+    public BankingManagerPage clickToSbmt() {
         submitButton.click();
+        return this;
     }
 
     public String getaAlertText() {
@@ -102,10 +110,11 @@ public class BankingManagerPage extends BasePage {
         driver.switchTo().alert().accept();
     }
 
-    public void sortByFirstNameAsc(){
+    public BankingManagerPage sortByFirstNameAsc() {
         waitElementToBeClickable(firstNameColumnInTable);
         firstNameColumnInTable.click();
         firstNameColumnInTable.click();
+        return this;
     }
 
     public Boolean customerExistsInTable(String name, String surname, String postCode) {
@@ -144,10 +153,10 @@ public class BankingManagerPage extends BasePage {
         double avgNameSize = nameToSizeMap.values().stream().collect(Collectors.averagingInt(num -> num));
         var targetName = findTargetName(nameToSizeMap, avgNameSize);
 
-        List<WebElement> targetCells =  nameToRowMap.get(targetName);
+        List<WebElement> targetCells = nameToRowMap.get(targetName);
         var deletedCustomer = targetCells.stream().limit(3).map(WebElement::getText).toList();
 
-        var deleteButton =  targetCells.get(targetCells.size() - 1).findElement(By.tagName("button"));
+        var deleteButton = targetCells.get(targetCells.size() - 1).findElement(By.tagName("button"));
         deleteButton.click();
 
         return deletedCustomer;
@@ -160,7 +169,7 @@ public class BankingManagerPage extends BasePage {
     private String findTargetName(Map<String, Integer> nameToSizeMap, double avgNameSize) {
         double minDiff = Double.MAX_VALUE;
         String targetName = "";
-        for (var entry: nameToSizeMap.entrySet()) {
+        for (var entry : nameToSizeMap.entrySet()) {
             var nameLength = entry.getValue();
             double diff = Math.abs(avgNameSize - nameLength);
             if (minDiff > diff) {

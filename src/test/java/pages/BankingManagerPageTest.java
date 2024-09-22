@@ -29,18 +29,18 @@ class BankingManagerPageTest {
     @Step("Add customer")
     @DisplayName("Тест создания клиента.")
     void addCustomer() {
-        page.open();
-        page.verifyPage();
-        page.clickAddCustomerButton();
+        page.open()
+                .verifyPage()
+                .clickAddCustomerButton();
 
         var gs = new GeneratorService();
         String name = gs.getFirstName();
         String surname = "Pupkin";
         String postcode = gs.getPostCode();
-        page.setFirstname(name);
-        page.setLastname(surname);
-        page.setPostCode(postcode);
-        page.clickToSbmt();
+        page.setFirstname(name)
+                .setLastname(surname)
+                .setPostCode(postcode)
+                .clickToSbmt();
         Assertions.assertTrue(page.getaAlertText().contains("Customer added successfully with customer id"));
         page.acceptAlert();
         page.clickCustomersButton();
@@ -50,19 +50,19 @@ class BankingManagerPageTest {
     @Test
     @DisplayName("Сортировка по первому имени")
     void sortCustomerstByFirstName() {
-        page.open();
-        page.verifyPage();
-        page.clickCustomersButton();
-        page.sortByFirstNameAsc();
+        page.open()
+                .verifyPage()
+                .clickCustomersButton()
+                .sortByFirstNameAsc();
         Assertions.assertTrue(page.checkSortAsc("Albus"));
     }
 
     @Test
     @DisplayName("Удаление клиента")
     void deleteCustomer() {
-        page.open();
-        page.verifyPage();
-        page.clickCustomersButton();
+        page.open()
+                .verifyPage()
+                .clickCustomersButton();
         var targetCells = page.deleteCustomer();
         String name = targetCells.get(0),
                 surname = targetCells.get(1),

@@ -16,7 +16,7 @@ public abstract class BasePage {
         this.driver = driver;
     }
 
-    protected abstract void open();
+    protected abstract BasePage open();
 
     protected void waitElementToBeVisible(WebElement webElement) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
