@@ -26,8 +26,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @Step("Add customer")
-    @DisplayName("Тест создания клиента.")
+    @Step("Тест создания клиента.")
     void addCustomer() {
         page.open()
                 .verifyPage()
@@ -48,7 +47,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @DisplayName("Сортировка по первому имени")
+    @Step("Сортировка по первому имени")
     void sortCustomerstByFirstName() {
         page.open()
                 .verifyPage()
@@ -58,7 +57,7 @@ class BankingManagerPageTest {
     }
 
     @Test
-    @DisplayName("Удаление клиента")
+    @Step("Удаление клиента")
     void deleteCustomer() {
         page.open()
                 .verifyPage()
