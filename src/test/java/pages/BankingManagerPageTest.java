@@ -6,13 +6,18 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import service.GeneratorService;
 
+import java.time.Duration;
+
 class BankingManagerPageTest {
-    WebDriver driver;
-    BankingManagerPage page;
+    private static final String SUCCESS_ADDED_CLIENT_MSG = "Customer added successfully with customer id";
+
+    private WebDriver driver;
+    private BankingManagerPage page;
 
     @BeforeEach
     void setUp() throws DriverNotSupportedException {
         driver = new DriverFactoryImpl().createDriverInstance();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         page = new BankingManagerPage(driver);
     }
 
@@ -39,7 +44,8 @@ class BankingManagerPageTest {
                 .setLastname(surname)
                 .setPostCode(postcode)
                 .clickToSbmt();
-        Assertions.assertTrue(page.getaAlertText().contains("Customer added successfully with customer id"));
+        Assertions.assertTrue(page.getaAlertText().contains(SUCCESS_ADDED_CLIENT_MSG),
+                "Текст не содержит сообщения %s".formatted(SUCCESS_ADDED_CLIENT_MSG));
         page.acceptAlert();
         page.clickCustomersButton();
         Assertions.assertTrue(page.customerExistsInTable(name, surname, postcode));

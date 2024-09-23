@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.PropertiesLoader;
 
-import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -102,7 +101,6 @@ public class BankingManagerPage extends BasePage {
     }
 
     public String getaAlertText() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver.switchTo().alert().getText();
     }
 
