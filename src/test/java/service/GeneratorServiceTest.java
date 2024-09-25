@@ -22,6 +22,7 @@ class GeneratorServiceTest {
         var gsTest = new GeneratorService(range);
 
         var resultName = gsTest.getFirstName();
-        Assertions.assertEquals(expectedFirstName, resultName);
+        Assertions.assertTrue(resultName.equals(expectedFirstName),
+                "Полученный результат не совпал с ожидаемым значением: %s".formatted(expectedFirstName));
     }
 }

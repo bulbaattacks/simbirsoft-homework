@@ -104,8 +104,9 @@ public class BankingManagerPage extends BasePage {
         return driver.switchTo().alert().getText();
     }
 
-    public void acceptAlert() {
+    public BankingManagerPage acceptAlert() {
         driver.switchTo().alert().accept();
+        return this;
     }
 
     public BankingManagerPage sortByFirstNameAsc() {

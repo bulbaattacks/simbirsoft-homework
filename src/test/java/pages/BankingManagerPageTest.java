@@ -10,6 +10,7 @@ import java.time.Duration;
 
 class BankingManagerPageTest {
     private static final String SUCCESS_ADDED_CLIENT_MSG = "Customer added successfully with customer id";
+    private static final String SORTED_NAME = "Albus";
 
     private WebDriver driver;
     private BankingManagerPage page;
@@ -46,9 +47,10 @@ class BankingManagerPageTest {
                 .clickToSbmt();
         Assertions.assertTrue(page.getaAlertText().contains(SUCCESS_ADDED_CLIENT_MSG),
                 "Текст не содержит сообщения %s".formatted(SUCCESS_ADDED_CLIENT_MSG));
-        page.acceptAlert();
-        page.clickCustomersButton();
-        Assertions.assertTrue(page.customerExistsInTable(name, surname, postcode));
+        page.acceptAlert()
+                .clickCustomersButton();
+        Assertions.assertTrue(page.customerExistsInTable(name, surname, postcode),
+                "Клиент %s %s с %s не создан".formatted(name, surname, postcode));
     }
 
     @Test
@@ -58,7 +60,8 @@ class BankingManagerPageTest {
                 .verifyPage()
                 .clickCustomersButton()
                 .sortByFirstNameAsc();
-        Assertions.assertTrue(page.checkSortAsc("Albus"));
+        Assertions.assertTrue(page.checkSortAsc(SORTED_NAME),
+                "Первое имя после сортировки по возрастанию должно быть %s".formatted(SORTED_NAME));
     }
 
     @Test
@@ -71,6 +74,7 @@ class BankingManagerPageTest {
         String name = targetCells.get(0),
                 surname = targetCells.get(1),
                 postCode = targetCells.get(2);
-        Assertions.assertFalse(page.customerExistsInTable(name, surname, postCode));
+        Assertions.assertFalse(page.customerExistsInTable(name, surname, postCode),
+                "Клиент %s %s c %s не удалён".formatted(name, surname, postCode));
     }
 }
